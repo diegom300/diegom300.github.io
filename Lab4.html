@@ -1,0 +1,44 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 4</title>
+    <script>
+    alert("Welcome to the Staten party supply store!");
+    const items = ["Napkins","Plates","Cups","Tablecloths","Balloons"];
+    var name = prompt("Please enter your name:");
+    var item = prompt("Item you would like to order(Case Sensitive):(Napkins,Plates,Cups,Tablecloths,Balloons)");
+    var quantity = prompt("How many would you like to order?"); 
+    var quantity = parseInt(quantity);
+    var time = new Date(); 
+    var arrivaldate = new Date();
+    arrivaldate.setDate(time.getDate() + 7);
+    arrivaldate = arrivaldate.toLocaleDateString();
+    
+    if (time.getHours() < 12) {
+        document.writeln("<h1>Good Morning " + name + "</h1>");
+    } else if (time.getHours() < 18) {
+        document.writeln("<h1>Good Afternoon " + name + "</h1>");
+    } else {
+        document.writeln("<h1>Good Evening " + name + "</h1>");
+    }
+
+    if (item != items[0] && item != items[1] && item != items[2] && item != items[3] && item != items[4]) {
+        document.writeln("<h1>Invalid item '" + item + "' Please refresh the page to try again. Item must be one of the following(Case Sensitive): Napkins, Plates, Cups, Tablecloths, Balloons.</h1>");
+    }
+      else if (quantity <= 0 || quantity > 99 || isNaN(quantity)) {
+        document.writeln("<h1>Your quantity should be between 1-99, you entered: " + quantity + ". Please refresh the page to try again.</h1>");
+    }
+      else {
+        document.writeln("<h1>Thank you for your order of " + quantity + " " + item + "(s)! Refresh page to order again.</h1>" + "<h1>Order will arrive on: " + arrivaldate + "</h1>");
+
+    
+    }
+
+    </script>
+</head>
+<body>
+   <p>By Diego Mejias 3/15/25</p>
+</body>
+    
+</html>
