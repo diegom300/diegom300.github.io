@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html land="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel = "stylesheet" href = "./style.css">
+    <title>RegisterPageLab5</title>
+   
+</head>
+<body>
+    
+        <div class = "glass-container">
+            <div class= "login-box">
+                <h2>Register Below</h2>
+                <form action="#" method="post">
+                    <input type = "text" id = "Firstname" name = "Firstname" required placeholder = "First Name">
+                    <input type = "text" id = "Lastname" name = "Lastname" required placeholder = "Last Name">
+                    <input type = "email" id = "Email" name = "email" required placeholder = "Email Address">
+                    <input type = "text" id = "Password" name = "password" required placeholder = "Password(Must include ! or ?)">
+                    <input type = "dateofbirth" id = "Dateofbirth" name = "dateofbirth" required placeholder = "Date Of Birth">
+                    <button type = "submit" name = "submit">Register</button>
+                </body>
+                <script>
+                    function handleSubmit(event) {
+                    event.preventDefault(); 
+                    
+                    function passwordCheck(password){
+                    var password = document.getElementById("Password").value;
+                    var pass_array = password.split("");
+                    var hasSpecialCharacter = false;
+                    for (var i = 0; i < pass_array.length; i++) {
+                        if (pass_array[i] === '?' || pass_array[i] === '!') {
+                                hasSpecialCharacter = true;
+                                break;
+                        }
+                    }
+                        return hasSpecialCharacter;
+                    }
+
+                       
+                    var firstname = document.getElementById("Firstname").value;
+                    var lastname = document.getElementById("Lastname").value;
+                    var email = document.getElementById("Email").value;
+                    var password = document.getElementById("Password").value;
+                    if (passwordCheck(password) === false) {
+                        alert("Password must contain a special character ! or ?");
+                        return;
+                        }
+                    var dateofbirth = document.getElementById("Dateofbirth").value;
+                    if (firstname === "" || lastname === "" || email === "" || password === "" || dateofbirth === "") {
+                        alert("Please fill in all fields");
+                        return;
+                    }
+                    var displayBox = document.createElement("div");
+                    displayBox.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
+                    displayBox.style.color = "white";
+                    displayBox.style.padding = "10px";
+                    displayBox.style.marginTop = "10px";
+                    displayBox.innerHTML = "Your Credentials: <br>" + "Firstname: " + firstname + "<br>" +
+                    "Lastname: " + lastname + "<br>" +
+                    "Email: " + email + "<br>" +
+                    "Password: " + "*".repeat(password.length) + "<br>" +
+                    "Date of Birth: " + dateofbirth;
+                    document.body.appendChild(displayBox);
+                    }
+
+                    
+                    var form = document.querySelector("form");
+                    form.addEventListener("submit", handleSubmit);
+                </script>
+            
+</html>
