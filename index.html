@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SoccerNow</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+</head>
+<body onload = "getNews()">
+  <div class = "top-half">
+    <div class ="headerdiv">
+    <h1>Welcome to SoccerNow</h1>
+      <p1>Your one-stop destination for all things soccer! </p1>
+
+      <ul class="nav justify-content-center"> 
+        <li class="nav-item">
+          <a class="nav-link btn btn-primary" aria-current="page" href="html.html" style="color: white;">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link btn btn-primary" href="playerlook.html" style="color: white;">Player Lookup</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link btn btn-primary" href="teamlook.html" style="color: white;">Team Lookup</a>
+        </li>        
+      </ul>
+    </ul>
+    </div>
+    <div class="container text-center">
+      <div class="row">
+        <div class="col-12">
+          <div class ="headerbox">
+            <h5>Todays Soccer News</h5>
+            <div class = "newsbox">
+              <div class="ticker" id="newsbox">
+                <h2>Latest News</h2>
+                 
+                </div>
+              </div>
+            </div>            
+          </div>
+        </div>
+      </div>
+    </div>
+    
+
+      
+    
+      
+      </div>
+  </div>
+   
+<div class ="bottom-half">
+  <div class="box">
+    <h2>League Standings</h2>
+      <p>Press the button below corresponding to which league you would like to see.</p>
+      <div class="container text-center">
+        <div class="row">
+          <div class="col">
+            <button class="btn btn-primary btn-lg" onclick= "Premier()">Premier League</button>
+          </div>
+          <div class="col">
+            <button class="btn btn-danger btn-lg" onclick= "LaLiga()">La Liga</button>
+          </div>
+          <div class="col">
+            <button class="btn btn-info btn-lg" onclick= "Bundesliga()">Bundesliga</button>
+          </div>
+          <div class="col">
+            <button class="btn btn-success btn-lg" onclick= "Ligue1()">Ligue 1</button>
+          </div>
+          <div class="col">
+            <button class="btn btn-warning btn-lg" onclick= "SerieA()">Serie A</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="filterBox" class ="filterBox">
+      <label for="filter">Sort By:</label>
+        <select id="filter" onchange="applyFilter()">
+        <option value="none">-- Select --</option>
+        <option value="wins">Most Wins</option>
+        <option value="losses">Most Losses</option>
+      </select>
+    </div>    
+    <div class="team-info" id="teamInfo">
+      <h2>Standings</h2>
+      <p>Click a button to see standings.</p>
+  </div>
+      
+ 
+<script>
+  let currentStandings = [];
+  function Premier() {
+      fetch('https://free-api-live-football-data.p.rapidapi.com/football-get-standing-all?leagueid=47', {
+        method: 'GET',
+        headers: {
+          'X-RapidAPI-Host': 'free-api-live-football-data.p.rapidapi.com',
+          'X-RapidAPI-Key': '437e7d4808msh56dc2ac0ee1e393p18c694jsn6f31235f49c8'
+        }
+      })
+      .then(response => response.json())
+      .then(data => { 
+        currentStandings = data.response.standing;
+        renderStandings(currentStandings);
+         const teams = data.response.standing; 
+         let output = '<h2>Standings</h2>';
+         teams.forEach((team, index) => {
+         output += `<p>${index + 1}. ${team.name} - ${team.pts}pts - ${team.played} Played - ${team.wins} Wins - ${team.draws} Draws - ${team.losses} losses</p>`;
+      });
+      document.getElementById("teamInfo").innerHTML = output;
+    })
+      .catch(err => {
+        console.error(err);
+      });
+    }
+
+  function LaLiga() {
+        fetch('https://free-api-live-football-data.p.rapidapi.com/football-get-standing-all?leagueid=87', {
+        method: 'GET',
+        headers: {
+          'X-RapidAPI-Host': 'free-api-live-football-data.p.rapidapi.com',
+          'X-RapidAPI-Key': '437e7d4808msh56dc2ac0ee1e393p18c694jsn6f31235f49c8'
+        }
+      })
+      .then(response => response.json())
+      .then(data => { 
+        currentStandings = data.response.standing; // Store for filtering
+        renderStandings(currentStandings);
+        const teams = data.response.standing; 
+        let output = '<h2>Standings</h2>';
+        teams.forEach((team, index) => {
+        output += `<p>${index + 1}. ${team.name} - ${team.pts}pts - ${team.played} Played - ${team.wins} Wins - ${team.draws} Draws - ${team.losses} losses</p>`;
+      });
+      document.getElementById("teamInfo").innerHTML = output;
+    })
+      .catch(err => {
+        console.error(err);
+      });
+    }
+  function Bundesliga() {
+        fetch('https://free-api-live-football-data.p.rapidapi.com/football-get-standing-all?leagueid=54', {
+        method: 'GET',
+        headers: {
+          'X-RapidAPI-Host': 'free-api-live-football-data.p.rapidapi.com',
+          'X-RapidAPI-Key': '437e7d4808msh56dc2ac0ee1e393p18c694jsn6f31235f49c8'
+        }
+      })
+      .then(response => response.json())
+      .then(data => { 
+        currentStandings = data.response.standing; // Store for filtering
+        renderStandings(currentStandings);
+        const teams = data.response.standing; 
+        let output = '<h2>Standings</h2>';
+        teams.forEach((team, index) => {
+        output += `<p>${index + 1}. ${team.name} - ${team.pts}pts - ${team.played} Played - ${team.wins} Wins - ${team.draws} Draws - ${team.losses} losses</p>`;
+      });
+      document.getElementById("teamInfo").innerHTML = output;
+    })
+      .catch(err => {
+        console.error(err);
+      });
+    }
+  function Ligue1() {
+        fetch('https://free-api-live-football-data.p.rapidapi.com/football-get-standing-all?leagueid=53', {
+        method: 'GET',
+        headers: {
+          'X-RapidAPI-Host': 'free-api-live-football-data.p.rapidapi.com',
+          'X-RapidAPI-Key': '437e7d4808msh56dc2ac0ee1e393p18c694jsn6f31235f49c8'
+        }
+      })
+      .then(response => response.json())
+      .then(data => { 
+        currentStandings = data.response.standing; // Store for filtering
+        renderStandings(currentStandings);
+        const teams = data.response.standing; 
+        let output = '<h2>Standings</h2>';
+        teams.forEach((team, index) => {
+        output += `<p>${index + 1}. ${team.name} - ${team.pts}pts - ${team.played} Played - ${team.wins} Wins - ${team.draws} Draws - ${team.losses} losses</p>`;
+      });
+      document.getElementById("teamInfo").innerHTML = output;
+    })
+      .catch(err => {
+        console.error(err);
+      });
+    }
+  function SerieA() {
+        fetch('https://free-api-live-football-data.p.rapidapi.com/football-get-standing-all?leagueid=55', {
+        method: 'GET',
+        headers: {
+          'X-RapidAPI-Host': 'free-api-live-football-data.p.rapidapi.com',
+          'X-RapidAPI-Key': '437e7d4808msh56dc2ac0ee1e393p18c694jsn6f31235f49c8'
+        }
+      })
+      .then(response => response.json())
+      .then(data => { 
+        currentStandings = data.response.standing; // Store for filtering
+        renderStandings(currentStandings);
+        const teams = data.response.standing; 
+        let output = '<h2>Standings</h2>';
+        teams.forEach((team, index) => {
+        output += `<p>${index + 1}. ${team.name} - ${team.pts}pts - ${team.played} Played - ${team.wins} Wins - ${team.draws} Drawsm- ${team.losses} losses</p>`;
+      });
+      document.getElementById("teamInfo").innerHTML = output;
+    })
+      .catch(err => {
+        console.error(err);
+      });
+    }
+  function getNews() {
+    fetch('https://free-api-live-football-data.p.rapidapi.com/football-get-trendingnews', {
+      method: 'GET',
+      headers: {
+        'X-RapidAPI-Host': 'free-api-live-football-data.p.rapidapi.com',
+        'X-RapidAPI-Key': '437e7d4808msh56dc2ac0ee1e393p18c694jsn6f31235f49c8'
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        const articles = data.response.news;
+        let output = '<h2>Latest News as of Today</h2>';
+        articles.forEach((article, index) => { output += `<p>${article.title}</p>`; 
+        });
+        document.getElementById("newsbox").innerHTML = output;
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  }
+  function renderStandings(teams) {
+  let output = '<h2>Standings</h2>';
+  teams.forEach((team, index) => {
+    output += `<p>${index + 1}. ${team.name} - ${team.pts}pts - ${team.played} Played - ${team.wins} Wins - ${team.draws} Draws - ${team.losses} Losses</p>`;
+  });
+  document.getElementById("teamInfo").innerHTML = output;
+}
+function applyFilter() {  //FILTER FUNCTION
+  const filter = document.getElementById("filter").value;
+  let sortedStandings = [...currentStandings]; // Create a copy of the current standings
+
+  if (filter === "wins") {
+    sortedStandings.sort((a, b) => b.wins - a.wins);
+  } else if (filter === "losses") {
+    sortedStandings.sort((a, b) => b.losses - a.losses);
+  }
+
+  renderStandings(sortedStandings);
+}
+
+
+</script>
+
+</body>
+</html>
